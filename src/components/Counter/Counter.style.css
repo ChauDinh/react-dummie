@@ -1,0 +1,33 @@
+.counter__container {
+  background: #fafafa;
+  padding: 20px;
+  font-size: 20px;
+}
+
+.counter__area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+}
+
+.counter__btn {
+  cursor: pointer;
+  padding: 10px 16px;
+  margin: 0 10px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #fafafa;
+}
+
+.increment {
+  background-color: rgb(47, 206, 255);
+}
+
+.decrement {
+  background-color: rgb(255, 102, 173);
+}
