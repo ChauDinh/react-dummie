@@ -2,6 +2,7 @@ import React from "react";
 import { fetchRandomUserData } from "../../utils/fetchRandomUser";
 
 import "./User.style.css";
+import { UserLayout } from "../Layout/UserLayout";
 
 export const User = () => {
   const [userName, setUserName] = React.useState("");
@@ -31,16 +32,7 @@ export const User = () => {
         🤦‍♀️ Random User
       </button>
       {userName && userAvatar ? (
-        <div className="user__area">
-          <img
-            width="100px"
-            height="100px"
-            className="user__avatar"
-            alt="avatar"
-            src={userAvatar}
-          />
-          <div className="user__info">{userName}</div>
-        </div>
+        <UserLayout userAvatar={userAvatar} userName={userName} />
       ) : (
         <div>No user fetched yet!</div>
       )}

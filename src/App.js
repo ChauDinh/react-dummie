@@ -8,6 +8,7 @@ function App() {
   return (
     <div className="App">
       <h1>Hello from React.JS coding interview</h1>
+      <p>The CSS of this project is not support responsive yet 🐷</p>
       <Counter />
       <FetchRandomUser />
       <User />

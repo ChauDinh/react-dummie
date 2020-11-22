@@ -1,5 +1,4 @@
-.user__container {
-  background: #fafafa;
+.users__container {
   padding: 20px;
   font-size: 20px;
   display: flex;
@@ -8,7 +7,7 @@
   align-items: center;
 }
 
-.user__btn {
+.users__btn {
   cursor: pointer;
   padding: 10px 16px;
   border: none;
@@ -19,4 +18,11 @@
   color: #fafafa;
   background-color: rgb(47, 206, 255);
   margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.users__area {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
 }

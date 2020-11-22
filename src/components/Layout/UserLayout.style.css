@@ -1,0 +1,21 @@
+.user__area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 3px 3px 6px rgba(200, 200, 200, 0.5);
+  width: 150px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.user__avatar {
+  border: none;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.user__info {
+  margin-top: 20px;
+}
