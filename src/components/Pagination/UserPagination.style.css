@@ -1,0 +1,51 @@
+.userPagination__container {
+  background-color: #fafafa;
+  padding: 20px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.userPagination__area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.userPagination__paginateBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+.userPagination__prevBtn,
+.userPagination__nextBtn {
+  cursor: pointer;
+  padding: 10px 16px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #fafafa;
+  background-color: rgb(47, 206, 255);
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.userPagination__prevBtn:disabled {
+  background-color: rgb(175, 175, 175);
+  color: grey;
+}
+
+.userPagination__nextBtn:disabled {
+  background-color: rgb(175, 175, 175);
+  color: grey;
+}
