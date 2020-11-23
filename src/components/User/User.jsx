@@ -7,6 +7,8 @@ import { UserLayout } from "../Layout/UserLayout";
 export const User = () => {
   const [userName, setUserName] = React.useState("");
   const [userAvatar, setUserAvatar] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
 
   return (
     <div className="user__container">
@@ -19,19 +21,24 @@ export const User = () => {
       <button
         className="user__btn"
         onClick={async () => {
-          const fetchedData = await fetchRandomUserData().then(
-            (response) => JSON.parse(response).results[0]
-          );
+          setIsLoading(true);
+          const fetchedData = await fetchRandomUserData()
+            .then((response) => JSON.parse(response).results[0])
+            .catch(() => setIsError(true));
           const firstName = await fetchedData.name.first;
           const lastName = await fetchedData.name.last;
           const avatar = await fetchedData.picture.thumbnail;
           setUserAvatar(avatar);
           setUserName(`${firstName} ${lastName}`);
+          setIsLoading(false);
         }}
       >
         🤦‍♀️ Random User
       </button>
-      {userName && userAvatar ? (
+      {isError && <p>Oops! Something went wrong...</p>}
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : userName && userAvatar ? (
         <UserLayout userAvatar={userAvatar} userName={userName} />
       ) : (
         <div>No user fetched yet!</div>

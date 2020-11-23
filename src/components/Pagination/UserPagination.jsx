@@ -7,12 +7,18 @@ import "./UserPagination.style.css";
 export const UserPagination = () => {
   const [userInfos, setUserInfos] = React.useState([]);
   const [page, setPage] = React.useState(1);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
 
   React.useEffect(() => {
-    fetchMultipleUsersData(page).then((response) => {
-      const newUserInfos = response.results;
-      setUserInfos(newUserInfos);
-    });
+    setIsLoading(true);
+    fetchMultipleUsersData(page)
+      .then((response) => {
+        const newUserInfos = response.results;
+        setUserInfos(newUserInfos);
+        setIsLoading(false);
+      })
+      .catch(() => setIsError(true));
   }, [page]);
 
   return (
@@ -25,13 +31,18 @@ export const UserPagination = () => {
         (including next/prev buttons)
       </p>
       <div className="userPagination__area">
-        {userInfos.map((userInfo, idx) => (
-          <UserLayout
-            key={idx}
-            userAvatar={userInfo.picture.thumbnail}
-            userName={`${userInfo.name.first} ${userInfo.name.last}`}
-          />
-        ))}
+        {isError && <p>Oops! Something went wrong!...</p>}
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          userInfos.map((userInfo, idx) => (
+            <UserLayout
+              key={idx}
+              userAvatar={userInfo.picture.thumbnail}
+              userName={`${userInfo.name.first} ${userInfo.name.last}`}
+            />
+          ))
+        )}
       </div>
       <div className="userPagination__paginateBtn">
         <button

@@ -7,6 +7,8 @@ import "./Users.style.css";
 export const Users = () => {
   const [users, setUsers] = React.useState([]);
   const [page, setPage] = React.useState(1);
+  const [isLoading, setIsLoading] = React.useState(false);
+
   return (
     <div className="users__container">
       <p>
@@ -25,14 +27,17 @@ export const Users = () => {
           />
         ))}
       </div>
+      {isLoading ? <p className="users__loadingArea">Loading...</p> : ""}
       <button
         className="users__btn"
         onClick={async () => {
+          setIsLoading(true);
           fetchMultipleUsersData(page)
             .then((response) => {
               const newUsers = [...users, ...response.results];
               setPage(page + 1);
               setUsers(newUsers);
+              setIsLoading(false);
             })
             .catch((err) => console.error(err));
         }}
