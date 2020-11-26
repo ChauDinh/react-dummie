@@ -1,5 +1,5 @@
 import React from "react";
-// import { Redirect } from "react-router-dom";
+import { Formik, Form } from "formik";
 
 import "./Register.style.css";
 
@@ -10,68 +10,107 @@ const initialRegisterValues = {
   confirmPassword: "",
 };
 
-export const Register = () => {
-  const [state, setState] = React.useState(initialRegisterValues);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("STATE: ", state);
-    window.location.replace("/login");
-  };
-  const handleChange = (e) => {
-    const name = e.target.name;
-    setState({
-      ...state,
-      [name]: e.target.value,
-    });
-  };
+const Register = () => {
   return (
-    <div className="register__container">
-      <form className="register__form" onSubmit={handleSubmit}>
-        <div className="register__field">
-          <label className="register__label">Username</label>
-          <input
-            className="register__input"
-            onChange={handleChange}
-            value={state.username}
-            name="username"
-            type="text"
-          />
-        </div>
-        <div className="register__field">
-          <label className="register__label">Email</label>
-          <input
-            className="register__input"
-            onChange={handleChange}
-            value={state.email}
-            name="email"
-            type="email"
-          />
-        </div>
-        <div className="register__field">
-          <label className="register__label">Password</label>
-          <input
-            className="register__input"
-            onChange={handleChange}
-            value={state.password}
-            name="password"
-            type="password"
-          />
-        </div>
-        <div className="register__field">
-          <label className="register__label">Confirm password</label>
-          <input
-            className="register__input"
-            onChange={handleChange}
-            value={state.confirmPassword}
-            name="confirmPassword"
-            type="password"
-          />
-        </div>
-        <button className="register__btn" type="submit">
-          Submit
-        </button>
-      </form>
+    <div>
+      <Formik
+        initialValues={initialRegisterValues}
+        onSubmit={(values, { setSubmitting }) => {
+          console.log(values);
+          setTimeout(() => {
+            setSubmitting(false);
+          }, 400);
+          window.location.replace("/login");
+        }}
+        validate={(values) => {
+          const errors = {};
+          if (!values.username) {
+            errors.username = "Username is required!";
+          } else if (!values.email) {
+            errors.email = "Email is required!";
+          } else if (!values.password) {
+            errors.password = "Password is required!";
+          } else if (values.confirmPassword !== values.password) {
+            errors.confirmPassword =
+              "Confirm password must be matched password";
+          }
+          console.log(errors);
+          return errors;
+        }}
+      >
+        {({
+          isSubmitting,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+          values,
+          errors,
+          touched,
+        }) => (
+          <Form className="register__container" onSubmit={handleSubmit}>
+            <input
+              className="register__input"
+              placeholder="Username"
+              type="text"
+              name="username"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.username}
+            />
+            <p className="register__errorMsg">
+              {errors.username && touched.username && errors.username}
+            </p>
+            <input
+              className="register__input"
+              placeholder="Email"
+              type="email"
+              name="email"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.email}
+            />
+            <p className="register__errorMsg">
+              {errors.email && touched.email && errors.email}
+            </p>
+            <input
+              className="register__input"
+              placeholder="Password"
+              type="password"
+              name="password"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.password}
+            />
+            <p className="register__errorMsg">
+              {errors.password && touched.password && errors.password}
+            </p>
+            <input
+              className="register__input"
+              placeholder="Confirm password"
+              type="password"
+              name="confirmPassword"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.confirmPassword}
+            />
+            <p className="register__errorMsg">
+              {errors.confirmPassword &&
+                touched.confirmPassword &&
+                errors.confirmPassword}
+            </p>
+
+            <button
+              className="register__btn"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              Submit
+            </button>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };
+
+export default Register;

@@ -9,7 +9,7 @@ import { Users } from "./components/Users/Users";
 import { UserPagination } from "./components/Pagination/UserPagination";
 import { NavBar } from "./components/NavBar/NavBar";
 import { Login } from "./components/Login/Login";
-import { Register } from "./components/Register/Register";
+import Register from "./components/Register/Register";
 
 export default function App() {
   return (
