@@ -1,0 +1,39 @@
+.navbar__container {
+  padding-bottom: 20px;
+  position: sticky;
+  top: 0px;
+  background-color: #fff;
+  box-shadow: 0px 1px 6px rgba(200, 200, 200, 0.5);
+}
+
+.navbar__loginBtn,
+.navbar__registerBtn,
+.navbar__homeBtn {
+  cursor: pointer;
+  padding: 10px 16px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #fafafa;
+  background-color: rgb(47, 206, 255);
+  margin-bottom: 20px;
+}
+
+.navbar__loginBtn {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.navbar__registerBtn {
+  margin-left: 10px;
+  background-color: rgb(255, 102, 173);
+}
+
+.navbar__homeBtn {
+  margin-right: 10px;
+  background-color: #fafafa;
+  color: #000;
+  border: 1px solid rgba(200, 200, 200, 0.8);
+}
