@@ -13,7 +13,7 @@
 }
 
 .register__input {
-  border: 1px solid rgba(200, 200, 200, 0.8);
+  border: 2px solid #000;
   color: #333;
   padding: 10px 8px;
   border-radius: 3px;
