@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import bcrypt from "bcryptjs";
 
 import "./Login.style.css";
-import { fetchMultiplesUsersFromDb } from "../../utils/fetchMultipleUsersFromDb";
+import { fetchSingleUserFromDb } from "../../utils/fetchUserDataFromDb";
 
 const initialLoginValues = {
   email: "",
@@ -17,42 +17,23 @@ export const Login = () => {
         initialValues={initialLoginValues}
         onSubmit={async (values, { setSubmitting }) => {
           console.log(values);
-          const errorsLogin = {};
-          const fetchedUsers = await fetchMultiplesUsersFromDb(
-            "http://localhost:8080/users/"
-          );
-          const fetchedUserEmails = fetchedUsers.map(
-            (fetchedUser) => fetchedUser.email
+          const fetchedUser = await fetchSingleUserFromDb(
+            `http://localhost:8080/users?email=${values.email}`
           );
           setTimeout(() => {
             setSubmitting(false);
           }, 400);
-          if (fetchedUserEmails.includes(values.email)) {
-            const userIdx = fetchedUserEmails.indexOf(values.email);
-            const isValidPassword = bcrypt.compareSync(
-              values.password,
-              fetchedUsers[userIdx].password
-            );
-            if (isValidPassword) {
-              await fetch("http://localhost:8080/sessions", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  userId: userIdx,
-                }),
-              });
-              window.location.replace("/");
-            } else {
-              // window.location.reload();
-              errorsLogin.email = "Something went wrong!";
-              errorsLogin.password = "Something went wrong!";
-            }
+          if (!fetchedUser) {
+            window.location.reload();
+          }
+          const isValidPassword = bcrypt.compareSync(
+            values.password,
+            fetchedUser[0].password
+          );
+          if (!isValidPassword) {
+            window.location.reload();
           } else {
-            // window.location.reload();
-            errorsLogin.email = "Something went wrong!";
-            errorsLogin.password = "Something went wrong!";
+            window.location.replace("/");
           }
           return;
         }}
