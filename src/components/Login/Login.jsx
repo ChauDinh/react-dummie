@@ -33,6 +33,15 @@ export const Login = () => {
           if (!isValidPassword) {
             window.location.reload();
           } else {
+            await fetch("http://localhost:8080/sessions", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                userId: fetchedUser[0].id,
+              }),
+            });
             window.location.replace("/");
           }
           return;
