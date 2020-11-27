@@ -3,6 +3,7 @@ import { Formik, Form } from "formik";
 import bcrypt from "bcryptjs";
 
 import "./Register.style.css";
+import { fetchSingleUserFromDb } from "../../utils/fetchUserDataFromDb";
 
 const initialRegisterValues = {
   username: "",
@@ -34,7 +35,7 @@ const Register = () => {
           });
           window.location.replace("/login");
         }}
-        validate={(values) => {
+        validate={async (values) => {
           const errors = {};
           if (!values.username) {
             errors.username = "Username is required!";
@@ -44,7 +45,13 @@ const Register = () => {
             errors.password = "Password is required!";
           } else if (values.confirmPassword !== values.password) {
             errors.confirmPassword =
-              "Confirm password must be matched password";
+              "Confirm password must be matched password!";
+          }
+          const isEmailValid = await fetchSingleUserFromDb(
+            `http://localhost:8080/users?email=${values.email}`
+          );
+          if (isEmailValid.length !== 0) {
+            errors.duplicate = "The email has been registered before!";
           }
           console.log(errors);
           return errors;
@@ -60,6 +67,9 @@ const Register = () => {
           touched,
         }) => (
           <Form className="register__container" onSubmit={handleSubmit}>
+            {errors.duplicate ? (
+              <p className="register__errorMsg">{errors.duplicate}</p>
+            ) : null}
             <input
               className="register__input"
               placeholder="Username"
