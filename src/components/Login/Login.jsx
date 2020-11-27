@@ -13,7 +13,7 @@ export const Login = () => {
     <div>
       <Formik
         initialValues={initialLoginValues}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting }) => {
           console.log(values);
           setTimeout(() => {
             setSubmitting(false);
@@ -40,7 +40,7 @@ export const Login = () => {
           errors,
           touched,
         }) => (
-          <Form className="login__container">
+          <Form className="login__container" onSubmit={handleSubmit}>
             <input
               className="login__input"
               placeholder="Username or email"

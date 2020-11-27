@@ -1,1 +1,23 @@
-{}
+{
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@admin.com",
+      "password": "$2a$10$DKXEF5rQRAm5R3tHuIH6LOOhQ/mimDU0BEHP5t.BhqzFioYgfzre2",
+      "id": 1
+    },
+    {
+      "username": "bob",
+      "email": "bob@bob.com",
+      "password": "$2a$10$JmKTI6XdtXHgIkkpUDslr.g8bzO9f5I9yQkQtvdzyTgNyGgtQV162",
+      "id": 2
+    },
+    {
+      "username": "bob2",
+      "email": "bob2@bob.com",
+      "password": "$2a$10$HqLewQlGR66WGHWPylvKFu2TpVjDya45e5JktIT37CrCwkBYA85ru",
+      "id": 3
+    }
+  ],
+  "sessions": []
+}

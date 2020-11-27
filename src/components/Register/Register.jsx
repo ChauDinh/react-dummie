@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
+import bcrypt from "bcryptjs";
 
 import "./Register.style.css";
 
@@ -15,11 +16,22 @@ const Register = () => {
     <div>
       <Formik
         initialValues={initialRegisterValues}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting }) => {
           console.log(values);
           setTimeout(() => {
             setSubmitting(false);
           }, 400);
+          await fetch("http://localhost:8080/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: values.username,
+              email: values.email,
+              password: bcrypt.hashSync(values.password),
+            }),
+          });
           window.location.replace("/login");
         }}
         validate={(values) => {
