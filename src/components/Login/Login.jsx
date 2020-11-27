@@ -1,10 +1,12 @@
 import React from "react";
 import { Formik, Form } from "formik";
+import bcrypt from "bcryptjs";
 
 import "./Login.style.css";
+import { fetchMultiplesUsersFromDb } from "../../utils/fetchMultipleUsersFromDb";
 
 const initialLoginValues = {
-  usernameEmail: "",
+  email: "",
   password: "",
 };
 
@@ -15,15 +17,49 @@ export const Login = () => {
         initialValues={initialLoginValues}
         onSubmit={async (values, { setSubmitting }) => {
           console.log(values);
+          const errorsLogin = {};
+          const fetchedUsers = await fetchMultiplesUsersFromDb(
+            "http://localhost:8080/users/"
+          );
+          const fetchedUserEmails = fetchedUsers.map(
+            (fetchedUser) => fetchedUser.email
+          );
           setTimeout(() => {
             setSubmitting(false);
           }, 400);
-          window.location.replace("/");
+          if (fetchedUserEmails.includes(values.email)) {
+            const userIdx = fetchedUserEmails.indexOf(values.email);
+            const isValidPassword = bcrypt.compareSync(
+              values.password,
+              fetchedUsers[userIdx].password
+            );
+            if (isValidPassword) {
+              await fetch("http://localhost:8080/sessions", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  userId: userIdx,
+                }),
+              });
+              window.location.replace("/");
+            } else {
+              // window.location.reload();
+              errorsLogin.email = "Something went wrong!";
+              errorsLogin.password = "Something went wrong!";
+            }
+          } else {
+            // window.location.reload();
+            errorsLogin.email = "Something went wrong!";
+            errorsLogin.password = "Something went wrong!";
+          }
+          return;
         }}
         validate={(values) => {
           const errors = {};
-          if (!values.usernameEmail) {
-            errors.usernameEmail = "Username or email is required!";
+          if (!values.email) {
+            errors.email = "Email is required!";
           } else if (!values.password) {
             errors.password = "Password is required!";
           }
@@ -43,17 +79,15 @@ export const Login = () => {
           <Form className="login__container" onSubmit={handleSubmit}>
             <input
               className="login__input"
-              placeholder="Username or email"
-              type="text"
-              name="usernameEmail"
+              placeholder="Email"
+              type="email"
+              name="email"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.usernameEmail}
             />
             <p className="login__errorMsg">
-              {errors.usernameEmail &&
-                touched.usernameEmail &&
-                errors.usernameEmail}
+              {errors.email && touched.email && errors.email}
             </p>
             <input
               className="login__input"
