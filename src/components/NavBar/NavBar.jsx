@@ -6,8 +6,6 @@ export const NavBar = () => {
   return (
     <>
       <div className="navbar__container">
-        <h1>Hello from React.JS coding interview</h1>
-        <p>The CSS of this project is not responsive yet 🐷</p>
         <a role="button" className="navbar__homeBtn" href="/">
           Home
         </a>

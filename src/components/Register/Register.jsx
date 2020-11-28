@@ -31,6 +31,8 @@ const Register = () => {
               username: values.username,
               email: values.email,
               password: bcrypt.hashSync(values.password),
+              created_at: new Date().toLocaleString(),
+              updated_at: new Date().toLocaleString(),
             }),
           });
           window.location.replace("/login");

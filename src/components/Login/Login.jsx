@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 
 import "./Login.style.css";
 import { fetchSingleUserFromDb } from "../../utils/fetchUserDataFromDb";
+import { fetchSessionFromDb } from "../../utils/fetchSessionFromDb";
 
 const initialLoginValues = {
   email: "",
@@ -33,16 +34,38 @@ export const Login = () => {
           if (!isValidPassword) {
             window.location.reload();
           } else {
-            await fetch("http://localhost:8080/sessions", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                userId: fetchedUser[0].id,
-              }),
-            });
-            window.location.replace("/");
+            const fetchedSession = await fetchSessionFromDb(
+              `http://localhost:8080/sessions?userId=${fetchedUser[0].id}`
+            );
+            if (fetchedSession.length > 0) {
+              console.log(fetchedSession[0].id);
+              await fetch(
+                `http://localhost:8080/sessions/${fetchedSession[0].id}`,
+                {
+                  method: "PATCH",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    updated_at: new Date().toLocaleString(),
+                  }),
+                }
+              );
+              window.location.replace("/");
+            } else {
+              await fetch("http://localhost:8080/sessions", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  user_id: fetchedUser[0].id,
+                  created_at: new Date().toLocaleString(),
+                  updated_at: new Date().toLocaleString(),
+                }),
+              });
+              window.location.replace("/");
+            }
           }
           return;
         }}

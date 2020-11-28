@@ -3,38 +3,18 @@
     {
       "username": "admin",
       "email": "admin@admin.com",
-      "password": "$2a$10$DKXEF5rQRAm5R3tHuIH6LOOhQ/mimDU0BEHP5t.BhqzFioYgfzre2",
+      "password": "$2a$10$I9GxoACG/6B8I0vrhS/NuejHBEWkfFoTbWXulYP0818tJFEatBAw2",
+      "created_at": "11/28/2020, 7:12:58 PM",
+      "updated_at": "11/28/2020, 7:12:58 PM",
       "id": 1
-    },
-    {
-      "username": "bob",
-      "email": "bob@bob.com",
-      "password": "$2a$10$JmKTI6XdtXHgIkkpUDslr.g8bzO9f5I9yQkQtvdzyTgNyGgtQV162",
-      "id": 2
-    },
-    {
-      "username": "bob2",
-      "email": "bob2@bob.com",
-      "password": "$2a$10$HqLewQlGR66WGHWPylvKFu2TpVjDya45e5JktIT37CrCwkBYA85ru",
-      "id": 3
     }
   ],
   "sessions": [
     {
-      "userId": 1,
-      "id": 2
-    },
-    {
-      "userId": 1,
-      "id": 3
-    },
-    {
-      "userId": 2,
-      "id": 4
-    },
-    {
-      "userId": 3,
-      "id": 5
+      "user_id": 1,
+      "created_at": "11/28/2020, 7:13:03 PM",
+      "updated_at": "11/28/2020, 7:13:03 PM",
+      "id": 1
     }
   ]
 }
