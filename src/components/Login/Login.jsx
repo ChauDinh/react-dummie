@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import bcrypt from "bcryptjs";
+import { useCookies } from "react-cookie";
 
 import "./Login.style.css";
 import { fetchSingleUserFromDb } from "../../utils/fetchUserDataFromDb";
@@ -12,6 +13,8 @@ const initialLoginValues = {
 };
 
 export const Login = () => {
+  const [, setCookie] = useCookies(["qid"]);
+
   return (
     <div>
       <Formik
@@ -35,7 +38,7 @@ export const Login = () => {
             window.location.reload();
           } else {
             const fetchedSession = await fetchSessionFromDb(
-              `http://localhost:8080/sessions?userId=${fetchedUser[0].id}`
+              `http://localhost:8080/sessions?user_id=${fetchedUser[0].id}`
             );
             if (fetchedSession.length > 0) {
               console.log(fetchedSession[0].id);
@@ -51,6 +54,10 @@ export const Login = () => {
                   }),
                 }
               );
+              setCookie("qid", bcrypt.hashSync(`${fetchedUser[0].id}`), {
+                path: "/",
+              });
+              setCookie("username", fetchedUser[0].username, { path: "/" });
               window.location.replace("/");
             } else {
               await fetch("http://localhost:8080/sessions", {
@@ -64,6 +71,10 @@ export const Login = () => {
                   updated_at: new Date().toLocaleString(),
                 }),
               });
+              setCookie("qid", bcrypt.hashSync(`${fetchedUser[0].id}`), {
+                path: "/",
+              });
+              setCookie("username", fetchedUser[0].username, { path: "/" });
               window.location.replace("/");
             }
           }

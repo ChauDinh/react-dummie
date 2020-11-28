@@ -7,14 +7,28 @@
       "created_at": "11/28/2020, 7:12:58 PM",
       "updated_at": "11/28/2020, 7:12:58 PM",
       "id": 1
+    },
+    {
+      "username": "bob",
+      "email": "bob@bob.com",
+      "password": "$2a$10$KC1CmC3p5kHqBeB6R9kvgeWWnvDDDSIl0Mw3LV0X07I2QpSVqxrne",
+      "created_at": "11/28/2020, 7:54:29 PM",
+      "updated_at": "11/28/2020, 7:54:29 PM",
+      "id": 2
     }
   ],
   "sessions": [
     {
       "user_id": 1,
       "created_at": "11/28/2020, 7:13:03 PM",
-      "updated_at": "11/28/2020, 7:13:03 PM",
+      "updated_at": "11/28/2020, 8:26:12 PM",
       "id": 1
+    },
+    {
+      "user_id": 2,
+      "created_at": "11/28/2020, 7:57:42 PM",
+      "updated_at": "11/28/2020, 8:25:39 PM",
+      "id": 2
     }
   ]
 }
